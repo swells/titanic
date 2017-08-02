@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Documentation - Polymer Redux</title>
-  <link rel="stylesheet" href="/polymer-redux/assets/main.css?v=76f85ab21fa28b7c5de15f66a39a3d32485817de">
+  <link rel="stylesheet" href="/polymer-redux/assets/main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
-  <script src="/polymer-redux/assets/main.js?v=76f85ab21fa28b7c5de15f66a39a3d32485817de"></script>
-  <script src="/polymer-redux/assets/webcomponents-lite.js?v=76f85ab21fa28b7c5de15f66a39a3d32485817de"></script>
+  <script src="/polymer-redux/assets/main.js"></script>
+  <script src="/polymer-redux/assets/webcomponents-lite.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js" integrity="sha256-jjFsm9SMUJvCL2OVD1ocpy5ATDfcE5i4lUeYn6yiGCg=" crossorigin="anonymous"></script>
 </head>
 
