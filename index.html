@@ -1,0 +1,342 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Documentation - Polymer Redux</title>
+  <link rel="stylesheet" href="/polymer-redux/assets/main.css?v=76f85ab21fa28b7c5de15f66a39a3d32485817de">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
+  <script src="/polymer-redux/assets/main.js?v=76f85ab21fa28b7c5de15f66a39a3d32485817de"></script>
+  <script src="/polymer-redux/assets/webcomponents-lite.js?v=76f85ab21fa28b7c5de15f66a39a3d32485817de"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js" integrity="sha256-jjFsm9SMUJvCL2OVD1ocpy5ATDfcE5i4lUeYn6yiGCg=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <section class="page-header">
+    <h1 class="project-name">
+      <a href="http://tur-nr.github.io/polymer-redux">Polymer ❤ Redux</a>
+    </h1>
+    <h2 class="project-tagline">Polymer bindings for Redux.</h2>
+    <!--<a href="#demos" class="btn"><i class="fa fa-eye"></i> Demos</a>-->
+    <a href="/polymer-redux/docs" class="btn"><i class="fa fa-book"></i> Documentation</a>
+    <a href="https://github.com/tur-nr/polymer-redux" class="btn"><i class="fa fa-github"></i> Github</a>
+  </section>
+
+  <section class="main-content">
+    <h2 id="documentation"><a href="#documentation">Documentation</a></h2>
+
+<p><a href="https://www.polymer-project.org">Polymer</a> bindings for <a href="http://redux.js.org">Redux</a>.
+Bind store state to properties and dispatch actions from within Polymer Elements.</p>
+
+<p>Polymer is a modern library for creating <a href="https://github.com/w3c/webcomponents">Web Components</a> within an application. Redux is a state container for managing predictable data. Joining the two libraries together allows developers to create powerful and complex applications faster and simpler. This approach allows the components you build with Polymer to be more focused on functionality than the applications state.</p>
+
+<p><small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: This documentation presumes an application has been initialised with <a href="https://github.com/Polymer/polymer-cli"><code class="highlighter-rouge">polymer-cli@next</code></a>.</small><br />
+<small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: This documentation won’t go into specifics of how to use Redux, read the it’s <a href="http://redux.js.org">documentation</a>.</small></p>
+
+<hr />
+
+<h2 id="install"><a href="#install">Install</a></h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bower install --save polymer-redux
+</code></pre>
+</div>
+
+<p><small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: <code class="highlighter-rouge">polymer-redux</code> <a href="https://www.npmjs.com/package/polymer-redux">NPM</a> package available.</small></p>
+
+<p>If the project hasn’t already installed <a href="http://redux.js.org">Redux</a>, use NPM to install.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm install --save redux
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="reduxmixin"><a href="#reduxmixin">ReduxMixin</a></h3>
+
+<p>Polymer uses <a href="http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes">Class Mixins</a> to extend and reuse functionality across Elements. Polymer Redux uses this techinque to connect any extending Element to a Redux store.</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- src/demo-app/redux-mixin.html --&gt;</span>
+
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"import"</span> <span class="na">href=</span><span class="s">"../../bower_components/polymer-redux/polymer-redux.html"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../node_modules/redux/dist/redux.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="c1">// Setup a Redux store</span>
+  <span class="kr">const</span> <span class="nx">initial</span> <span class="o">=</span> <span class="p">{</span><span class="na">message</span><span class="p">:</span> <span class="s1">'Hello, World!'</span><span class="p">};</span>
+  <span class="kr">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="nx">state</span> <span class="o">=&gt;</span> <span class="nx">state</span><span class="p">;</span>
+  <span class="kr">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">Redux</span><span class="p">.</span><span class="nx">createStore</span><span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">initial</span><span class="p">);</span>
+
+  <span class="c1">// Export the ReduxMixin</span>
+  <span class="nx">ReduxMixin</span> <span class="o">=</span> <span class="nx">PolymerRedux</span><span class="p">(</span><span class="nx">store</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p>How the Redux store is setup and initialised has no relation to Polymer Redux. Applying <a href="http://redux.js.org/docs/advanced/Middleware.html">middleware</a>, <a href="https://github.com/reactjs/reselect">selectors</a> and setting up the store elsewhere is up to the developer.</p>
+
+<h4 id="creating-elements"><a href="#creating-elements">Creating Elements</a></h4>
+
+<p><code class="highlighter-rouge">ReduxMixin</code> is just a Class Mixin that can be used to mix with <code class="highlighter-rouge">Polymer.Element</code> or any other Element within an application. A Class Mixin function takes an internal Class definition, extends the given parent Class and returns a new Class.</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code> <span class="c">&lt;!-- src/demo-app/demo-app.html --&gt;</span>
+
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"import"</span> <span class="na">href=</span><span class="s">"../../bower_components/polymer/polymer.html"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"import"</span> <span class="na">href=</span><span class="s">"redux-mixin.html"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="c1">// Use ReduxMixin to mix Polymer.Element into a new Class</span>
+  <span class="kr">class</span> <span class="nx">DemoApp</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">static</span> <span class="nx">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s1">'demo-app'</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">customElement</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">DemoApp</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">DemoApp</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">DemoApp</code> now extends both <code class="highlighter-rouge">Polymer.Element</code> and the underlying Polymer Redux Class.</p>
+
+<h3 id="binding-properties"><a href="#binding-properties">Binding Properties</a></h3>
+
+<p>Polymer Redux binds state to an Element’s property. It adds a new key for defining properties, <code class="highlighter-rouge">statePath</code>.</p>
+
+<p><code class="highlighter-rouge">statePath</code> informs Polymer Redux where in the state it can find a property’s value. There are two types of bindings in Polymer Redux, <a href="#static-binding">Static Binding</a> and <a href="#dynamic-binding">Dynamic Binding</a>.</p>
+
+<h4 id="static-binding"><a href="#static-binding">Static Binding</a></h4>
+
+<p>Elements can bind their properties by giving a path to the value.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">DemoApp</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="kr">static</span> <span class="nx">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">message</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+        <span class="na">statePath</span><span class="p">:</span> <span class="s1">'message'</span> <span class="c1">// Binds state, "Hello, World!"</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Now whenever the Redux store changes the value of <code class="highlighter-rouge">message</code> in the state, so to will the property.</p>
+
+<p><small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: Paths can use dot notation for nested values. <code class="highlighter-rouge">user.name</code> and <code class="highlighter-rouge">user.friends.0.name</code> are legal paths.</small></p>
+
+<h4 id="dynamic-binding"><a href="#dynamic-binding">Dynamic Binding (Selectors)</a></h4>
+
+<p>Whilst <a href="#static-binding">Static Binding</a> is easy it’s not very flexible. When handling arrays or combining state from multiple paths it’s best to use Dynamic Binding, or <em>selectors</em>.</p>
+
+<p>Setting a <code class="highlighter-rouge">Function</code>, <em>selector</em>, as the <code class="highlighter-rouge">statePath</code> tells Polymer Redux that the binding is dynamic. It will pass the store’s state to the selector and set the property to it’s return value.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">DemoApp</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="kr">static</span> <span class="nx">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">message</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+        <span class="nx">statePath</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="s1">'Message from Redux: '</span> <span class="o">+</span> <span class="nx">state</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: Selectors are <a href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976#.3dg24hk2m"><em>pure</em></a> functions.</small><br />
+<small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: To bind a property to the full state just return it <code class="highlighter-rouge">statePath(state) { return state; }</code>.</small><br />
+<small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: Check out <a href="https://github.com/reactjs/reselect">Reselect</a> for a cleaner approach to create selectors.</small></p>
+
+<h4 id="inherited-properties"><a href="#inherited-properties">Inherited Properties</a></h4>
+
+<p>It is also possible to share properties across multiple Elements using Class Mixins.</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- src/demo-app/message-mixin.html --&gt;</span>
+
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"import"</span> <span class="na">rel=</span><span class="s">"redux-mixin.html"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="nx">MessageMixin</span> <span class="o">=</span> <span class="nx">Parent</span> <span class="o">=&gt;</span> <span class="kr">class</span> <span class="nx">MessageMixin</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Parent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">static</span> <span class="nx">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">message</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+          <span class="na">statePath</span><span class="p">:</span> <span class="s1">'message'</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p><small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: Property bindings respect the prototypal inheritance model.</small><br />
+<small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: An Element’s property bindings are <em>final</em>.</small></p>
+
+<h4 id="two-way-binding"><a href="#two-way-binding">Two-Way Binding</a></h4>
+
+<p>Principle #2 of Redux’s <a href="http://redux.js.org/docs/introduction/ThreePrinciples.html">Three Principles</a> says that state is read-only. Polymer however allows components to have two-way binding via the notify flag. If the properties flagged with <code class="highlighter-rouge">notify</code> and has <code class="highlighter-rouge">statePath</code> set, a warning be logged during the application runtime.</p>
+
+<h3 id="actions"><a href="#actions">Actions</a></h3>
+
+<p>State changes in Redux happen by what is known as <a href="http://redux.js.org/docs/basics/Actions.html">Actions</a>. Whenever a Redux application wishes to make a state change it dispatches an action to the reducer. The reducer makes these changes and the state is updated.</p>
+
+<p>When writing a Polymer Redux application this pattern still applies. If a property value is binded, then setting that property’s value is now redundant.</p>
+
+<h4 id="dispatching-actions"><a href="#dispatching-actions">Dispatching Actions</a></h4>
+
+<p>Any Element that extends <a href="#reduxmixin"><code class="highlighter-rouge">ReduxMixin</code></a> inherits a <code class="highlighter-rouge">.dispatch()</code> method. This method is used to dispatch actions to the Redux store.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">reducer</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s1">'UPDATE_MESSAGE'</span><span class="p">:</span>
+      <span class="c1">// ALWAYS return new state</span>
+      <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">state</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">message</span><span class="p">:</span> <span class="nx">action</span><span class="p">.</span><span class="nx">message</span> <span class="c1">// New message</span>
+      <span class="p">});</span>
+    
+    <span class="c1">// Return the state, nothing changed.</span>
+    <span class="nl">default</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Now whenever the action of type <code class="highlighter-rouge">UPDATE_MESSAGE</code> is triggered, the reducer will update the state and all binded properties will recieve the new state values.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">DemoApp</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="nx">connectedCallback</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">connectedCallback</span><span class="p">();</span>
+
+    <span class="c1">// Let's update the message</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">({</span>
+      <span class="na">type</span><span class="p">:</span> <span class="s1">'UPDATE_MESSAGE'</span><span class="p">,</span>
+      <span class="na">message</span><span class="p">:</span> <span class="s1">'This is MAGIC!'</span><span class="p">,</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="action-creators"><a href="#action-creators">Action Creators</a></h4>
+
+<p>A cleaner and flexible way to dispatch actions to the store is to use Action Creators. Action Creators are defined statically on an Element, much like the way properties are. They return an object using the key for the action name and a <code class="highlighter-rouge">Function</code> as it’s value for the creator.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">DemoApp</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="kr">static</span> <span class="nx">get</span> <span class="nx">actions</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">updateMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="s1">'UPDATE_MESSAGE'</span><span class="p">,</span>
+          <span class="nx">message</span>
+        <span class="p">};</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+  <span class="nx">connectedCallback</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">connectedCallback</span><span class="p">();</span>
+
+    <span class="c1">// Update message using the Action Creator</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="s1">'updateMessage'</span><span class="p">,</span> <span class="s1">'This is also MAGIC!'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Using Action Creators is highly recommended when using Polymer Redux. It provides a number of advantages;</p>
+
+<p><em>Scope</em></p>
+
+<p>Creators defined on an Element are scoped to that Element. So developers can identify what actions it will dispatch.</p>
+
+<p><em>Sharing</em></p>
+
+<p>Using Class Mixins actions can be shared across multiple Elements. This is good practice as actions can be grouped together based on topics of the applications state. See <a href="#inherited-actions">Inherited Actions</a>.</p>
+
+<p><em>Modular</em></p>
+
+<p>The actual creator can be imported from an external resource allowing them to be modular, decoupled and pure functions. Making the them easier to test.</p>
+
+<h4 id="inherited-actions"><a href="#inherited-actions">Inherited Actions</a></h4>
+
+<p>Like <a href="#inherited-properties">Inherited Properties</a> it is also possible to inherit actions from other Class Mixins.</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- src/demo-app/actions-mixin.html --&gt;</span>
+
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"import"</span> <span class="na">rel=</span><span class="s">"redux-mixin.html"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="nx">ActionsMixin</span> <span class="o">=</span> <span class="nx">Parent</span> <span class="o">=&gt;</span> <span class="kr">class</span> <span class="nx">ActionsMixin</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Parent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">static</span> <span class="nx">get</span> <span class="nx">actions</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">sharedAction</span><span class="p">()</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'SHARED_ACTION'</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p><small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: Actions respect the prototypal inheritance model.</small><br />
+<small><i class="fa fa-info-circle" aria-hidden="true"></i> <strong><em>Info</em></strong>: An Element’s actions are <em>final</em>.</small></p>
+
+<h4 id="async-actions"><a href="#async-actions">Asynchronous Actions</a></h4>
+
+<p><a href="https://github.com/gaearon/redux-thunk">Redux Thunk</a> middleware gives the Redux store the ability to dispatch actions that are asynchronous. Like fetching data from an API service, or waiting for a response from a <code class="highlighter-rouge">WebWorker</code>.</p>
+
+<p>The <code class="highlighter-rouge">.dispatch()</code> method on an Polymer Redux Element can also be used in the same way as using Redux Thunk.</p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">DemoApp</span> <span class="kr">extends</span> <span class="nx">ReduxMixin</span><span class="p">(</span><span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+
+  <span class="nx">connectedCallback</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">.</span><span class="nx">connectedCallback</span><span class="p">();</span>
+
+    <span class="c1">// Update message using Redux Thunk</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">((</span><span class="nx">dispatch</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">dispatch</span><span class="p">(</span><span class="s1">'updateMessage'</span><span class="p">,</span> <span class="s1">'Please wait...'</span><span class="p">);</span>
+
+      <span class="c1">// Do async task</span>
+      <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">dispatch</span><span class="p">(</span><span class="s1">'updateMessage'</span><span class="p">,</span> <span class="s1">'Sorry for being late!'</span><span class="p">);</span>
+      <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+
+    <footer class="site-footer">
+      <span class="site-footer-owner">
+        <a href="https://github.com/tur-nr/polymer-redux">polymer-redux</a> is maintained by <a href="https://github.com/tur-nr">tur-nr</a>.
+      </span>
+      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+    </footer>
+  </section>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-96181793-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+
+</html>
