@@ -1,0 +1,24 @@
+<script>
+  // Setup a Redux store
+  const initial = {message: 'Redux is awesome.'};
+  const reducer = function (state, action) {
+    switch (action.type) {
+      case 'UPDATE_MESSAGE': return {message: action.message};
+      default: return state;
+    }
+  };
+  const store = Redux.createStore(
+    reducer,
+    initial,
+
+    // The best part 8)
+    Redux.compose(
+      window.devToolsExtension
+        ? window.devToolsExtension()
+        : v => v
+    )
+  );
+  
+  // Create the Polymer mixin
+  ReduxMixin = PolymerRedux(store);
+</script>
